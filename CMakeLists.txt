@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.16.3 FATAL_ERROR)
 
 project(
   c_toolbelt
-  VERSION 0.1.2
+  VERSION 0.2.0
   LANGUAGES C)
 
 # Generate compile_commands.json file
@@ -72,7 +72,8 @@ install(FILES ${EXPORT_FILE} DESTINATION include/${PROJECT_NAME})
 
 set(CPACK_PACKAGE_NAME ${PROJECT_NAME})
 set(CPACK_PACKAGE_VENDOR "Danilo Horta")
-set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Additional functions to the standard C library")
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY
+    "Additional functions to the standard C library")
 set(CPACK_PACKAGE_CONTACT "Danilo Horta")
 set(CPACK_PACKAGE_VERSION_MAJOR ${PROJECT_VERSION_MAJOR})
 set(CPACK_PACKAGE_VERSION_MINOR ${PROJECT_VERSION_MINOR})

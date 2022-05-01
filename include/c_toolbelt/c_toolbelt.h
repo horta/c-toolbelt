@@ -14,12 +14,14 @@
 CTB_API size_t ctb_strlcpy(char *dst, const char *src, size_t dsize);
 
 #define CTB_STRLCPY(ptr, dst, src)                                             \
-    ctb_strlcpy((ptr)->dst, src, __CTB_ARRAY_SIZE_OF(*(ptr), dst))
+    ctb_strlcpy((ptr)->dst, src, __CTB_ARRAY_SIZEOF(*(ptr), dst))
+
+#define CTB_SIZEOF_MEMBER(var, member) sizeof(__CTB_MEMBER_REF((var), member))
 
 /* ------ PRIVATE MACROS ------ */
 #define __CTB_MEMBER_REF(var, member) ((__typeof__(var) *)0)->member
 
-#define __CTB_ARRAY_SIZE_OF(var, member)                                       \
+#define __CTB_ARRAY_SIZEOF(var, member)                                        \
     CTB_ARRAY_SIZE(__CTB_MEMBER_REF((var), member))
 
 #endif
