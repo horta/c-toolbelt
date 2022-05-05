@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.16.3 FATAL_ERROR)
 
 project(
   c_toolbelt
-  VERSION 0.2.0
+  VERSION 0.2.1
   LANGUAGES C)
 
 # Generate compile_commands.json file
@@ -11,13 +11,13 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 include(cmake/compiler-options.cmake)
 include(cmake/sanitizers.cmake)
 
-add_library(${PROJECT_NAME} src/c_toolbelt.c)
-add_library(C_TOOLBELT::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
+add_library(c_toolbelt src/c_toolbelt.c)
+add_library(C_TOOLBELT::c_toolbelt ALIAS c_toolbelt)
 
-set(EXPORT_FILE ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}/export.h)
+set(EXPORT_FILE ${CMAKE_CURRENT_BINARY_DIR}/c_toolbelt/export.h)
 include(GenerateExportHeader)
 generate_export_header(
-  ${PROJECT_NAME}
+  c_toolbelt
   BASE_NAME
   CTB
   INCLUDE_GUARD_NAME
@@ -30,47 +30,46 @@ generate_export_header(
 if(CMAKE_BUILD_TYPE STREQUAL "Release")
   include(CheckIPOSupported)
   check_ipo_supported()
-  set_target_properties(${PROJECT_NAME} PROPERTIES INTERPROCEDURAL_OPTIMIZATION
-                                                   TRUE)
+  set_target_properties(c_toolbelt PROPERTIES INTERPROCEDURAL_OPTIMIZATION ON)
 endif()
 
-target_compile_features(${PROJECT_NAME} PRIVATE c_std_11)
-target_compile_options(${PROJECT_NAME} PRIVATE ${WARNING_FLAGS})
+target_compile_features(c_toolbelt PRIVATE c_std_11)
+target_compile_options(c_toolbelt PRIVATE ${WARNING_FLAGS})
+set_target_properties(c_toolbelt PROPERTIES POSITION_INDEPENDENT_CODE ON)
 
 target_include_directories(
-  ${PROJECT_NAME}
+  c_toolbelt
   PUBLIC $<INSTALL_INTERFACE:include>
          $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
          $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
   PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>)
 
-install(TARGETS ${PROJECT_NAME} EXPORT ${PROJECT_NAME}-targets)
+install(TARGETS c_toolbelt EXPORT c_toolbelt-targets)
 
-install(DIRECTORY include/${PROJECT_NAME}/ DESTINATION include/${PROJECT_NAME})
+install(DIRECTORY include/c_toolbelt/ DESTINATION include/c_toolbelt)
 
 install(
-  EXPORT ${PROJECT_NAME}-targets
-  FILE ${PROJECT_NAME}-targets.cmake
+  EXPORT c_toolbelt-targets
+  FILE c_toolbelt-targets.cmake
   NAMESPACE C_TOOLBELT::
-  DESTINATION lib/cmake/${PROJECT_NAME})
+  DESTINATION lib/cmake/c_toolbelt)
 
 include(CMakePackageConfigHelpers)
 
-set(CMAKE_CONFIG_FILE ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config.cmake)
-configure_package_config_file(
-  ${PROJECT_NAME}-config.cmake.in ${CMAKE_CONFIG_FILE}
-  INSTALL_DESTINATION lib/cmake/${PROJECT_NAME})
+set(CMAKE_CONFIG_FILE ${CMAKE_CURRENT_BINARY_DIR}/c_toolbelt-config.cmake)
+configure_package_config_file(c_toolbelt-config.cmake.in ${CMAKE_CONFIG_FILE}
+                              INSTALL_DESTINATION lib/cmake/c_toolbelt)
 
 set(CMAKE_VERSION_FILE
-    ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config-version.cmake)
+    ${CMAKE_CURRENT_BINARY_DIR}/c_toolbelt-config-version.cmake)
 write_basic_package_version_file(${CMAKE_VERSION_FILE}
                                  COMPATIBILITY SameMajorVersion)
 
 install(FILES ${CMAKE_VERSION_FILE} ${CMAKE_CONFIG_FILE}
-        DESTINATION lib/cmake/${PROJECT_NAME})
-install(FILES ${EXPORT_FILE} DESTINATION include/${PROJECT_NAME})
+        DESTINATION lib/cmake/c_toolbelt)
+install(FILES ${EXPORT_FILE} DESTINATION include/c_toolbelt)
 
-set(CPACK_PACKAGE_NAME ${PROJECT_NAME})
+set(CPACK_PACKAGE_NAME c_toolbelt)
 set(CPACK_PACKAGE_VENDOR "Danilo Horta")
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY
     "Additional functions to the standard C library")
