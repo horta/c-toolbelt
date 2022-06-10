@@ -1,5 +1,8 @@
 #include "c_toolbelt/c_toolbelt.h"
 
+#include <assert.h>
+#include <stdlib.h>
+
 /*
  * Copyright (c) 1998, 2015 Todd C. Miller <Todd.Miller@courtesan.com>
  *

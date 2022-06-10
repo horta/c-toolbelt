@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.16.3 FATAL_ERROR)
 
 project(
   c_toolbelt
-  VERSION 0.2.1
+  VERSION 0.3.0
   LANGUAGES C)
 
 # Generate compile_commands.json file
@@ -11,7 +11,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 include(cmake/compiler-options.cmake)
 include(cmake/sanitizers.cmake)
 
-add_library(c_toolbelt src/c_toolbelt.c)
+add_library(c_toolbelt src/endian.c src/strlcpy.c src/realloc.c)
 add_library(C_TOOLBELT::c_toolbelt ALIAS c_toolbelt)
 
 set(EXPORT_FILE ${CMAKE_CURRENT_BINARY_DIR}/c_toolbelt/export.h)
