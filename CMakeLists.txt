@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.16.3 FATAL_ERROR)
 
 project(
   c_toolbelt
-  VERSION 0.3.0
+  VERSION 0.3.1
   LANGUAGES C)
 
 # Generate compile_commands.json file
