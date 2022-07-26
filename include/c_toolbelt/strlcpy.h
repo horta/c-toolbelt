@@ -2,6 +2,7 @@
 #define C_TOOLBELT_STRLCPY_H
 
 #include "c_toolbelt/export.h"
+#include "c_toolbelt/size.h"
 #include <stddef.h>
 
 /*
@@ -12,6 +13,6 @@
 CTB_API size_t ctb_strlcpy(char *dst, const char *src, size_t dsize);
 
 #define CTB_STRLCPY(ptr, dst, src)                                             \
-    ctb_strlcpy((ptr)->dst, src, __CTB_ARRAY_SIZEOF(*(ptr), dst))
+    ctb_strlcpy((ptr)->dst, src, CTB_ARRAY_SIZEOF(*(ptr), dst))
 
 #endif
