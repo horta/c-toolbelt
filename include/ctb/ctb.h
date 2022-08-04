@@ -6,6 +6,7 @@
 #include "ctb/export.h"
 #include "ctb/realloc.h"
 #include "ctb/size.h"
+#include "ctb/strdup.h"
 #include "ctb/strlcpy.h"
 #include "ctb/strtok_s.h"
 

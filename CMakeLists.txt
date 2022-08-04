@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.16.3 FATAL_ERROR)
 
 project(
   c_toolbelt
-  VERSION 0.6.1
+  VERSION 0.7.0
   LANGUAGES C
 )
 
@@ -12,7 +12,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 include(cmake/compiler-options.cmake)
 include(cmake/sanitizers.cmake)
 
-add_library(ctb src/endian.c src/strlcpy.c src/realloc.c src/bzero.c src/strtok_s.c)
+add_library(ctb src/endian.c src/strlcpy.c src/realloc.c src/bzero.c src/strtok_s.c str/strdup.c)
 add_library(C_TOOLBELT::ctb ALIAS ctb)
 
 set(EXPORT_FILE ${CMAKE_CURRENT_BINARY_DIR}/ctb/export.h)
