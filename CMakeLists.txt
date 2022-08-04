@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.16.3 FATAL_ERROR)
 
 project(
   c_toolbelt
-  VERSION 0.4.0
+  VERSION 0.5.0
   LANGUAGES C
 )
 
@@ -12,13 +12,13 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 include(cmake/compiler-options.cmake)
 include(cmake/sanitizers.cmake)
 
-add_library(c_toolbelt src/endian.c src/strlcpy.c src/realloc.c src/bzero.c)
-add_library(C_TOOLBELT::c_toolbelt ALIAS c_toolbelt)
+add_library(ctb src/endian.c src/strlcpy.c src/realloc.c src/bzero.c)
+add_library(C_TOOLBELT::ctb ALIAS ctb)
 
-set(EXPORT_FILE ${CMAKE_CURRENT_BINARY_DIR}/c_toolbelt/export.h)
+set(EXPORT_FILE ${CMAKE_CURRENT_BINARY_DIR}/ctb/export.h)
 include(GenerateExportHeader)
 generate_export_header(
-  c_toolbelt
+  ctb
   BASE_NAME
   CTB
   INCLUDE_GUARD_NAME
@@ -32,43 +32,43 @@ generate_export_header(
 if(CMAKE_BUILD_TYPE STREQUAL "Release")
   include(CheckIPOSupported)
   check_ipo_supported()
-  set_target_properties(c_toolbelt PROPERTIES INTERPROCEDURAL_OPTIMIZATION ON)
+  set_target_properties(ctb PROPERTIES INTERPROCEDURAL_OPTIMIZATION ON)
 endif()
 
-target_compile_features(c_toolbelt PRIVATE c_std_11)
-target_compile_options(c_toolbelt PRIVATE ${WARNING_FLAGS})
-set_target_properties(c_toolbelt PROPERTIES POSITION_INDEPENDENT_CODE ON)
+target_compile_features(ctb PRIVATE c_std_11)
+target_compile_options(ctb PRIVATE ${WARNING_FLAGS})
+set_target_properties(ctb PROPERTIES POSITION_INDEPENDENT_CODE ON)
 
 target_include_directories(
-  c_toolbelt
+  ctb
   PUBLIC $<INSTALL_INTERFACE:include>
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
   PRIVATE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>
 )
 
-install(TARGETS c_toolbelt EXPORT c_toolbelt-targets)
+install(TARGETS ctb EXPORT ctb-targets)
 
-install(DIRECTORY include/c_toolbelt/ DESTINATION include/c_toolbelt)
+install(DIRECTORY include/ctb/ DESTINATION include/ctb)
 
 install(
-  EXPORT c_toolbelt-targets
-  FILE c_toolbelt-targets.cmake
+  EXPORT ctb-targets
+  FILE ctb-targets.cmake
   NAMESPACE C_TOOLBELT::
-  DESTINATION lib/cmake/c_toolbelt
+  DESTINATION lib/cmake/ctb
 )
 
 include(CMakePackageConfigHelpers)
 
-set(CMAKE_CONFIG_FILE ${CMAKE_CURRENT_BINARY_DIR}/c_toolbelt-config.cmake)
+set(CMAKE_CONFIG_FILE ${CMAKE_CURRENT_BINARY_DIR}/ctb-config.cmake)
 configure_package_config_file(
-  c_toolbelt-config.cmake.in ${CMAKE_CONFIG_FILE}
-  INSTALL_DESTINATION lib/cmake/c_toolbelt
+  ctb-config.cmake.in ${CMAKE_CONFIG_FILE}
+  INSTALL_DESTINATION lib/cmake/ctb
 )
 
 set(
   CMAKE_VERSION_FILE
-  ${CMAKE_CURRENT_BINARY_DIR}/c_toolbelt-config-version.cmake
+  ${CMAKE_CURRENT_BINARY_DIR}/ctb-config-version.cmake
 )
 write_basic_package_version_file(
   ${CMAKE_VERSION_FILE}
@@ -77,9 +77,9 @@ write_basic_package_version_file(
 
 install(
   FILES ${CMAKE_VERSION_FILE} ${CMAKE_CONFIG_FILE}
-  DESTINATION lib/cmake/c_toolbelt
+  DESTINATION lib/cmake/ctb
 )
-install(FILES ${EXPORT_FILE} DESTINATION include/c_toolbelt)
+install(FILES ${EXPORT_FILE} DESTINATION include/ctb)
 
 set(CPACK_PACKAGE_NAME c_toolbelt)
 set(CPACK_PACKAGE_VENDOR "Danilo Horta")

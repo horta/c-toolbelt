@@ -1,7 +1,7 @@
 #ifndef C_TOOLBELT_ENDIAN_H
 #define C_TOOLBELT_ENDIAN_H
 
-#include "c_toolbelt/export.h"
+#include "ctb/export.h"
 #include <stdint.h>
 
 CTB_API uint16_t ctb_htons(uint16_t);

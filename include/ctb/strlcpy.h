@@ -1,8 +1,8 @@
 #ifndef C_TOOLBELT_STRLCPY_H
 #define C_TOOLBELT_STRLCPY_H
 
-#include "c_toolbelt/export.h"
-#include "c_toolbelt/size.h"
+#include "ctb/export.h"
+#include "ctb/size.h"
 #include <stddef.h>
 
 /*
