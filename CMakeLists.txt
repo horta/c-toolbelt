@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.16.3 FATAL_ERROR)
 
 project(
   c_toolbelt
-  VERSION 0.6.0
+  VERSION 0.6.1
   LANGUAGES C
 )
 

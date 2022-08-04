@@ -7,5 +7,6 @@
 #include "ctb/realloc.h"
 #include "ctb/size.h"
 #include "ctb/strlcpy.h"
+#include "ctb/strtok_s.h"
 
 #endif
