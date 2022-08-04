@@ -3,6 +3,6 @@
 
 #include "ctb/export.h"
 
-CTB_API char *strdup(char const *s);
+CTB_API char *ctb_strdup(char const *s);
 
 #endif
