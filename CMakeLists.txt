@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.16.3 FATAL_ERROR)
 
 project(
   c_toolbelt
-  VERSION 0.7.2
+  VERSION 0.8.0
   LANGUAGES C
 )
 
@@ -27,6 +27,21 @@ generate_export_header(
   CTB_API
   EXPORT_FILE_NAME
   ${EXPORT_FILE}
+)
+include(TestBigEndian)
+test_big_endian(IS_BIG_ENDIAN)
+if(IS_BIG_ENDIAN)
+  set(CTB_BYTE_ORDER "CTB_BIG_ENDIAN")
+  message(STATUS "Endianness: Big-endian")
+else()
+  set(CTB_BYTE_ORDER "CTB_LITTLE_ENDIAN")
+  message(STATUS "Endianness: Little-endian")
+endif()
+
+set(CONFIG_FILE ${CMAKE_CURRENT_BINARY_DIR}/ctb/config.h)
+configure_file(
+  ${PROJECT_SOURCE_DIR}/include/ctb/config.h.in
+  ${CONFIG_FILE}
 )
 
 if(CMAKE_BUILD_TYPE STREQUAL "Release")
@@ -79,7 +94,7 @@ install(
   FILES ${CMAKE_VERSION_FILE} ${CMAKE_CONFIG_FILE}
   DESTINATION lib/cmake/ctb
 )
-install(FILES ${EXPORT_FILE} DESTINATION include/ctb)
+install(FILES ${EXPORT_FILE} ${CONFIG_FILE} DESTINATION include/ctb)
 
 set(CPACK_PACKAGE_NAME c_toolbelt)
 set(CPACK_PACKAGE_VENDOR "Danilo Horta")

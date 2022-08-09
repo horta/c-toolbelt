@@ -1,0 +1,6 @@
+#ifndef C_TOOLBELT_CONFIG_H
+#define C_TOOLBELT_CONFIG_H
+
+#define CTB_BYTE_ORDER @CTB_BYTE_ORDER@
+
+#endif

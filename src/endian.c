@@ -3,27 +3,8 @@
 #include <arpa/inet.h>
 #include <stdbool.h>
 
-#if __APPLE__
-#include <machine/endian.h>
-#else
-#include <endian.h>
-#endif
-
-#if BYTE_ORDER != LITTLE_ENDIAN && BYTE_ORDER != BIG_ENDIAN
-#error We are supporting little and big endian only for now.
-#endif
-
 #ifndef htonll
-
-#ifndef BYTE_ORDER
-#define BYTE_ORDER __BYTE_ORDER__
-#endif
-
-#ifndef BIG_ENDIAN
-#define BIG_ENDIAN __BIG_ENDIAN__
-#endif
-
-#if BYTE_ORDER == BIG_ENDIAN
+#if CTB_BYTE_ORDER == CTB_BIG_ENDIAN
 
 static inline uint64_t htonll(uint64_t x) { return x; }
 static inline uint64_t ntohll(uint64_t x) { return x; }
