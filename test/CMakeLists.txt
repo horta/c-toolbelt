@@ -1,0 +1,5 @@
+add_executable(endian endian.c)
+target_link_libraries(endian PRIVATE C_TOOLBELT::ctb)
+target_compile_features(endian PRIVATE c_std_11)
+target_compile_options(endian PRIVATE ${WARNING_FLAGS})
+add_test(NAME endian COMMAND endian)

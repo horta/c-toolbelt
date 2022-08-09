@@ -1,8 +1,5 @@
 #include "ctb/endian.h"
 
-#include <arpa/inet.h>
-#include <stdbool.h>
-
 #ifndef htonll
 #if CTB_BYTE_ORDER == CTB_BIG_ENDIAN
 

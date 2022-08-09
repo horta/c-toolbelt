@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.16.3 FATAL_ERROR)
 
 project(
   c_toolbelt
-  VERSION 0.8.0
+  VERSION 0.9.0
   LANGUAGES C
 )
 
@@ -28,8 +28,11 @@ generate_export_header(
   EXPORT_FILE_NAME
   ${EXPORT_FILE}
 )
+
 include(TestBigEndian)
 test_big_endian(IS_BIG_ENDIAN)
+set(CTB_LITTLE_ENDIAN "1234")
+set(CTB_BIG_ENDIAN "4321")
 if(IS_BIG_ENDIAN)
   set(CTB_BYTE_ORDER "CTB_BIG_ENDIAN")
   message(STATUS "Endianness: Big-endian")
@@ -95,6 +98,9 @@ install(
   DESTINATION lib/cmake/ctb
 )
 install(FILES ${EXPORT_FILE} ${CONFIG_FILE} DESTINATION include/ctb)
+
+enable_testing()
+add_subdirectory(test)
 
 set(CPACK_PACKAGE_NAME c_toolbelt)
 set(CPACK_PACKAGE_VENDOR "Danilo Horta")
