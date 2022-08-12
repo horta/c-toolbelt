@@ -2,8 +2,13 @@ cmake_minimum_required(VERSION 3.16.3 FATAL_ERROR)
 
 project(
   c_toolbelt
-  VERSION 0.9.1
+  VERSION 0.9.2
   LANGUAGES C)
+
+set(CTB_MAIN_PROJECT OFF)
+if(CMAKE_SOURCE_DIR STREQUAL PROJECT_SOURCE_DIR)
+  set(CTB_MAIN_PROJECT ON)
+endif()
 
 # Generate compile_commands.json file
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
@@ -15,7 +20,14 @@ add_library(ctb src/endian.c src/strlcpy.c src/realloc.c src/bzero.c
                 src/strtok_s.c src/strdup.c)
 add_library(C_TOOLBELT::ctb ALIAS ctb)
 
-option(CTB_BUILD_TESTS "Build the unit tests" ON)
+if(CTB_MAIN_PROJECT)
+  set(CTB_BUILD_TESTS_DEFAULT ON)
+else()
+  set(CTB_BUILD_TESTS_DEFAULT OFF)
+endif()
+
+option(CTB_BUILD_TESTS "Build the unit tests" ${CTB_BUILD_TESTS_DEFAULT})
+message(STATUS "CTB_MAIN_PROJECT: " ${CTB_MAIN_PROJECT})
 message(STATUS "CTB_BUILD_TESTS: " ${CTB_BUILD_TESTS})
 
 set(EXPORT_FILE ${CMAKE_CURRENT_BINARY_DIR}/ctb/export.h)
