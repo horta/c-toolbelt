@@ -1,6 +1,7 @@
 #ifndef C_TOOLBELT_CTB_H
 #define C_TOOLBELT_CTB_H
 
+#include "ctb/bits.h"
 #include "ctb/byteswap.h"
 #include "ctb/bzero.h"
 #include "ctb/config.h"
