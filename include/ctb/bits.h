@@ -23,4 +23,9 @@ static inline void ctb_bits_flp(unsigned long *x, unsigned bit)
     *x ^= 1UL << bit;
 }
 
+static inline unsigned ctb_bits_ffs(unsigned long *x)
+{
+    return *x ? (unsigned)(__builtin_ffsl(*x) - 1) : sizeof(long);
+}
+
 #endif
